@@ -1,0 +1,2 @@
+module EconomicObjectsHelper
+end

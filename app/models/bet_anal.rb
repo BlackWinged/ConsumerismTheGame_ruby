@@ -1,0 +1,2 @@
+class BetAnal < ApplicationRecord
+end

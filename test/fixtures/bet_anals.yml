@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  undrawnCycleCount: 1
+  undrawnBallCount: 1
+  measuredTime: 2017-01-31 19:00:29
+
+two:
+  undrawnCycleCount: 1
+  undrawnBallCount: 1
+  measuredTime: 2017-01-31 19:00:29

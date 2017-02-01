@@ -1,0 +1,1 @@
+json.partial! "economic_objects/economic_object", economic_object: @economic_object

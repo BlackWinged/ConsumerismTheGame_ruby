@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Undrawncyclecount:</strong>
+  <%= @bet_anal.undrawnCycleCount %>
+</p>
+
+<p>
+  <strong>Undrawnballcount:</strong>
+  <%= @bet_anal.undrawnBallCount %>
+</p>
+
+<p>
+  <strong>Measuredtime:</strong>
+  <%= @bet_anal.measuredTime %>
+</p>
+
+<%= link_to 'Edit', edit_bet_anal_path(@bet_anal) %> |
+<%= link_to 'Back', bet_anals_path %>

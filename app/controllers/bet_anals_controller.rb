@@ -35,6 +35,7 @@ class BetAnalsController < ApplicationController
   # GET /bet_anals.json
   def index
     @bet_anals = BetAnal.all
+
   end
 
   # GET /bet_anals/1
@@ -93,12 +94,20 @@ class BetAnalsController < ApplicationController
 
 
   def betData
-    test = params.keys
+    data = JSON.parse(request.raw_post)
+    buffer = data["bettingData"]
+    numbers = buffer["numbers"]
 
-    if test == 3
-      return
+    lastMod = BetAnal.where(refererUrl: request.referer).last()
+    numbers.keys.each do |f|
+      model = BetAnal.new(:undrawnBallCount => numbers[f], :undrawnCycleCount => f, :measuredTime => Time.now, :nameOfLoto => buffer['nameOfSite'], :refererUrl => request.referer)
+      if lastMod != nil
+        if (model.getHour == lastMod.getHour)
+          return
+        end
+      end
+      model.save
     end
-
   end
 
   # private

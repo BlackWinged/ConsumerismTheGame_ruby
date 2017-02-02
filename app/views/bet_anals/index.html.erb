@@ -17,10 +17,7 @@
       <tr>
         <td><%= bet_anal.undrawnCycleCount %></td>
         <td><%= bet_anal.undrawnBallCount %></td>
-        <td><%= bet_anal.measuredTime %></td>
-        <td><%= link_to 'Show', bet_anal %></td>
-        <td><%= link_to 'Edit', edit_bet_anal_path(bet_anal) %></td>
-        <td><%= link_to 'Destroy', bet_anal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= bet_anal.getHour %></td>
       </tr>
     <% end %>
   </tbody>

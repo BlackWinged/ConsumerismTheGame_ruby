@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   post 'bet_anals/betData'
   match "*all" => "bet_anals#cors_preflight_check", via: [:options] ,:constraints => { :method => "OPTIONS" }
-#  resources :bet_anals
+  resources :bet_anals
   resources :products
   resources :economic_objects
   resources :users

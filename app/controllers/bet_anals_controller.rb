@@ -93,8 +93,8 @@ class BetAnalsController < ApplicationController
 
 
   def betData
-    dataSet = request[:data]
-    formattedData = JSON.parse(dataSet)
+    test = params.keys
+
     if test == 3
       return
     end

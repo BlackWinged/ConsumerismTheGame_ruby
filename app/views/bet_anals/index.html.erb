@@ -5,7 +5,7 @@
 <table>
   <thead>
     <tr>
-      <% for i in 0..@maxRecords %>
+      <% for i in 0..@maxRecords + 2 %>
         <th colspan="1">ooooo</th>
       <% end %>
     </tr>
@@ -14,11 +14,11 @@
   <tbody>
     <% @parsed_anals.keys.each do |key| %>
       <tr>
+        <td><%= @parsed_anals[key].first.getDateAndHour %></td>
+        <td><%= @parsed_anals[key].first.nameOfLoto %></td>
         <% @parsed_anals[key].each do |single_record| %>
             <td><%= single_record.undrawnCycleCount.to_s + ' - ' + single_record.undrawnBallCount.to_s %></td>
         <% end %>
-        <td><%= @parsed_anals[key].first.getDateAndHour %></td>
-        <td><%= @parsed_anals[key].first.nameOfLoto %></td>
       </tr>
   <% end %>
   </tbody>
@@ -26,4 +26,3 @@
 </div>
 <br>
 
-<%= link_to 'New Bet Anal', new_bet_anal_path %>

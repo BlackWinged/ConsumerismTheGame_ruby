@@ -1,28 +1,29 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Bet Anals</h1>
-
+<div id="table-scroll" style="overflow:auto">
 <table>
   <thead>
     <tr>
-      <th>Undrawncyclecount</th>
-      <th>Undrawnballcount</th>
-      <th>Measuredtime</th>
-      <th colspan="3"></th>
+      <% for i in 0..@maxRecords %>
+        <th colspan="1">ooooo</th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
-    <% @bet_anals.each do |bet_anal| %>
+    <% @parsed_anals.keys.each do |key| %>
       <tr>
-        <td><%= bet_anal.undrawnCycleCount %></td>
-        <td><%= bet_anal.undrawnBallCount %></td>
-        <td><%= bet_anal.getHour %></td>
+        <% @parsed_anals[key].each do |single_record| %>
+            <td><%= single_record.undrawnCycleCount.to_s + ' - ' + single_record.undrawnBallCount.to_s %></td>
+        <% end %>
+        <td><%= @parsed_anals[key].first.getDateAndHour %></td>
+        <td><%= @parsed_anals[key].first.nameOfLoto %></td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
-
+</div>
 <br>
 
 <%= link_to 'New Bet Anal', new_bet_anal_path %>

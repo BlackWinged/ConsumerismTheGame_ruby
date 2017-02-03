@@ -35,8 +35,26 @@ class BetAnalsController < ApplicationController
   # GET /bet_anals.json
   def index
     @bet_anals = BetAnal.all
+    @parsed_anals = {}
+    @siteNames = []
+     @bet_anals.each do |f|
+      @siteNames.push(f.nameOfLoto)
+      if !@parsed_anals.key?(f.getDateAndHour)
+        @parsed_anals[f.getDateAndHour] = []
+      end
+      @parsed_anals[f.getDateAndHour].push(f)
+     end
+    max = 0
+    @parsed_anals.keys.each do |key|
+      if max < @parsed_anals[key].count
+        max = @parsed_anals[key].count
+      end
+    end
+    @siteNames.uniq!
+    @parsed_anals
+    @maxRecords = max
+    end
 
-  end
 
   # GET /bet_anals/1
   # GET /bet_anals/1.json
@@ -98,7 +116,7 @@ class BetAnalsController < ApplicationController
     buffer = data["bettingData"]
     numbers = buffer["numbers"]
 
-    lastMod = BetAnal.where(refererUrl: request.referer).last()
+    lastMod = BetAnal.where(nameOfLoto: buffer['nameOfSite']).last()
     numbers.keys.each do |f|
       model = BetAnal.new(:undrawnBallCount => numbers[f], :undrawnCycleCount => f, :measuredTime => Time.now, :nameOfLoto => buffer['nameOfSite'], :refererUrl => request.referer)
       if lastMod != nil

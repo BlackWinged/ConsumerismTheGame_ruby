@@ -33,16 +33,27 @@ class BetAnalsController < ApplicationController
 
   # GET /bet_anals
   # GET /bet_anals.json
+  
   def index
+    @bet_anals = BetAnal.all
+    i = 1
+    @bet_anals.each do |f|
+      f.group = i
+      i += 1
+      f.save
+    end
+  end
+  
+  def indexOLD
     @bet_anals = BetAnal.all
     @parsed_anals = {}
     @siteNames = []
      @bet_anals.each do |f|
       @siteNames.push(f.nameOfLoto)
-      if !@parsed_anals.key?(f.getDateAndHour)
-        @parsed_anals[f.getDateAndHour] = []
+      if !@parsed_anals.key?(f.group)
+        @parsed_anals[f.group] = []
       end
-      @parsed_anals[f.getDateAndHour].push(f)
+      @parsed_anals[f.group].push(f)
      end
     max = 0
     @parsed_anals.keys.each do |key|
@@ -51,7 +62,6 @@ class BetAnalsController < ApplicationController
       end
     end
     @siteNames.uniq!
-    @parsed_anals
     @maxRecords = max
     end
 
@@ -120,7 +130,7 @@ class BetAnalsController < ApplicationController
     numbers.keys.each do |f|
       model = BetAnal.new(:undrawnBallCount => numbers[f], :undrawnCycleCount => f, :measuredTime => Time.now, :nameOfLoto => buffer['nameOfSite'], :refererUrl => request.referer)
       if lastMod != nil
-        if (model.getHour == lastMod.getHour)
+        if TimeDifference.between(model.measuredTime, lastMod.measuredTime).in_minutes < buffer["interval"]
           return
         end
       end

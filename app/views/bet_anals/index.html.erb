@@ -1,28 +1,47 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Bet Anals</h1>
-<div id="table-scroll" style="overflow:auto">
-<table>
-  <thead>
-    <tr>
-      <% for i in 0..@maxRecords + 2 %>
-        <th colspan="1">ooooo</th>
-      <% end %>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @parsed_anals.keys.each do |key| %>
-      <tr>
-        <td><%= @parsed_anals[key].first.getDateAndHour %></td>
-        <td><%= @parsed_anals[key].first.nameOfLoto %></td>
-        <% @parsed_anals[key].each do |single_record| %>
-            <td><%= single_record.undrawnCycleCount.to_s + ' - ' + single_record.undrawnBallCount.to_s %></td>
+<div class="mdl-grid demo-content">
+  <div class="demo-graphs mdl-shadow--2dp mdl-color--white mdl-cell mdl-cell--8-col">
+    <div id="table-scroll" style="overflow:auto">
+      <table>
+        <thead>
+          <tr>
+            <% for i in 0..@maxRecords + 3 %>
+              <th colspan="1">ooooo</th>
+            <% end %>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <% @parsed_anals.keys.each do |key| %>
+            <tr>
+              <td><%= @parsed_anals[key].first.getDateAndHour %></td>
+              <td><%= @parsed_anals[key].first.nameOfLoto %></td>
+              <td></td>
+              <% @parsed_anals[key].each do |single_record| %>
+                  <td><%= single_record.undrawnCycleCount.to_s + ' - ' + single_record.undrawnBallCount.to_s %></td>
+              <% end %>
+            </tr>
         <% end %>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-</div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+  <div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+      <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+        Controls
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <form method="get">
+          <input type="text"/>
+          <input type="text"/>
+          <input type="text"/>
+          <input type="submit" name="submit">
+        </form>
+      </div>
+    </div>
+    </div>
 <br>
 

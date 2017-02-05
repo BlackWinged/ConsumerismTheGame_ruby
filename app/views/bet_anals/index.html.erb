@@ -35,13 +35,26 @@
       </div>
       <div class="mdl-card__actions mdl-card--border">
         <form method="get">
-          <input type="text"/>
-          <input type="text"/>
-          <input type="text"/>
+          <select name="nameOfLoto">
+            <% @siteNames.each do |f| %>
+              <option value="<%=f%>" ><%= f %></option>
+            <% end %>
+          </select>
+          <br/>
+          <label>from</label>
+          <input name="from_date" type="date"/>
+          <br/>
+          <label>to</label>
+          <input mame="to_date" type="date"/>
+          <br/>
+          <label>Bet on:</label>
+          <input mame="bet_on_number" type="number"/>
+          <br/>
           <input type="submit" name="submit">
         </form>
+        <a href="<%= bet_anals_path %>">Clear</a>
       </div>
     </div>
     </div>
-<br>
+</div>
 

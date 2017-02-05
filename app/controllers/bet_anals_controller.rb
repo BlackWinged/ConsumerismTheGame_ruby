@@ -64,7 +64,12 @@ class BetAnalsController < ApplicationController
   # end
   
   def index
-    @bet_anals = BetAnal.all
+    if params[:nameOfLoto] != nil
+      @bet_anals = BetAnal.where(nameOfLoto: params[:nameOfLoto])
+    else
+      @bet_anals = BetAnal.all
+    end
+
     @parsed_anals = {}
     @siteNames = []
      @bet_anals.each do |f|
@@ -84,6 +89,19 @@ class BetAnalsController < ApplicationController
     @maxRecords = max
     end
 
+  def processProfits(bet_anals, numberToCheck)
+    profit = 0
+    lastChecked = nil
+    bet_anals.each do |f|
+        if bet_anals.undrawnCycleCount == numberToCheck.to_i
+          if lastChecked == nil
+            lastChecked = bet_anals.undrawnBallCount
+          else
+
+          end
+        end
+    end
+  end
 
   # GET /bet_anals/1
   # GET /bet_anals/1.json

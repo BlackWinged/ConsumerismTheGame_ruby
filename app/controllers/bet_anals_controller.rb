@@ -36,12 +36,31 @@ class BetAnalsController < ApplicationController
   
   def index
     @bet_anals = BetAnal.all
-    i = 1
-    @bet_anals.each do |f|
-      f.group = i
-      i += 1
-      f.save
+    @parsed_anals = {}
+    @siteNames = []
+    @bet_anals.map do |f|
+      @siteNames.push(f.nameOfLoto)
+      if !@parsed_anals.key?(f.getDateAndHour)
+        @parsed_anals[f.getDateAndHour] = []
+      end
+      @parsed_anals[f.getDateAndHour].push(f)
     end
+    count = 1
+    @parsed_anals.keys.map do |f|
+      @parsed_anals[f].map do |g|
+        g.group = count
+        g.save
+      end
+      count += 1
+    end
+    max = 0
+    @parsed_anals.keys.each do |key|
+      if max < @parsed_anals[key].count
+        max = @parsed_anals[key].count
+      end
+    end
+    @siteNames.uniq!
+    @maxRecords = max
   end
   
   def indexOLD

@@ -150,7 +150,7 @@ class BetAnalsController < ApplicationController
     numbers.keys.each do |f|
       model = BetAnal.new(:undrawnBallCount => numbers[f], :undrawnCycleCount => f, :measuredTime => Time.now, :nameOfLoto => buffer['nameOfSite'], :refererUrl => request.referer, :group => groupNum + buffer["resultGroup"].to_i)
       if lastMod != nil
-        if TimeDifference.between(model.measuredTime, lastMod.measuredTime).in_minutes < buffer["interval"]
+        if TimeDifference.between(model.measuredTime, lastMod.measuredTime).in_minutes < (buffer["interval"].to_i() - 1)
           return
         end
       end

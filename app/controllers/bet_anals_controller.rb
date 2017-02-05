@@ -146,8 +146,9 @@ class BetAnalsController < ApplicationController
     numbers = buffer["numbers"]
 
     lastMod = BetAnal.where(nameOfLoto: buffer['nameOfSite']).last()
+    groupNum = BetAnal.last.group
     numbers.keys.each do |f|
-      model = BetAnal.new(:undrawnBallCount => numbers[f], :undrawnCycleCount => f, :measuredTime => Time.now, :nameOfLoto => buffer['nameOfSite'], :refererUrl => request.referer)
+      model = BetAnal.new(:undrawnBallCount => numbers[f], :undrawnCycleCount => f, :measuredTime => Time.now, :nameOfLoto => buffer['nameOfSite'], :refererUrl => request.referer, :group => groupNum + buffer["resultGroup"].to_i)
       if lastMod != nil
         if TimeDifference.between(model.measuredTime, lastMod.measuredTime).in_minutes < buffer["interval"]
           return

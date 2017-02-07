@@ -7,6 +7,7 @@
       <table>
         <thead>
           <tr>
+            <th colspan="1">Izvlacenja</th>
             <% @orderedGroups.each do |key| %>
               <th colspan="1"><%= @parsed_anals[key][0].getDateAndHour %></th>
             <% end %>
@@ -48,12 +49,12 @@
           <input name="from_date" type="date"/>
           <br/>
           <label>to</label>
-          <input mame="to_date" type="date"/>
+          <input name="to_date" type="date"/>
           <br/>
           <label>Bet on:</label>
-          <input mame="bet_on_number" type="number"/>
+          <input name="bet_on_number" type="number"/>
           <br/>
-          <input type="submit" name="submit">
+          <input type="submit" value="submit">
         </form>
         <a href="<%= bet_anals_path %>">Clear</a>
       </div>

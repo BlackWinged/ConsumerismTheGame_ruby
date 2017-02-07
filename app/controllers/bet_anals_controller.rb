@@ -64,8 +64,17 @@ class BetAnalsController < ApplicationController
   # end
   
   def index
-    if params[:nameOfLoto] != nil
-      @bet_anals = BetAnal.where(nameOfLoto: params[:nameOfLoto])
+    if !params[:nameOfLoto].empty?
+      fromDate = Time.now
+      uptoDate = Time.now
+      if !params[:from_date].empty?
+        fromDate = params[:from_date]
+      end
+      if !params[:to_date].empty?
+        uptoDate = params[:to_date]
+      end
+
+      @bet_anals = BetAnal.where(nameOfLoto: params[:nameOfLoto]).where('bet_anals."measuredTime" >= ? and bet_anals."measuredTime" <= ?', fromDate, uptoDate)
     else
       @bet_anals = BetAnal.all
     end
@@ -93,21 +102,39 @@ class BetAnalsController < ApplicationController
     @orderedGroups.uniq!
     @orderedGroups.sort!
     @maxRecords = max
+      if !params[:bet_on_number].empty?
+       # processProfits(@parsed_anals, params[:bet_on_number].to_i, @maxCycles, @orderedGroups)
+      end
     end
 
-  def processProfits(bet_anals, numberToCheck)
-    profit = 0
-    lastChecked = nil
-    bet_anals.each do |f|
-        if bet_anals.undrawnCycleCount == numberToCheck.to_i
-          if lastChecked == nil
-            lastChecked = bet_anals.undrawnBallCount
-          else
+  def processProfits(parsed_anals, numberToCheck, maxCycles, orderedGroups)
+    dataSets = []
 
-          end
+    for numCheck in numberToCheck..maxCycles
+      nextSet = []
+      for j in 1..orderedGroups.count
+        if parsed_anals[j].key?(numCheck)
+          nextSet.push(parsed_anals[j][numCheck].undrawnBallCount)
+        else
+          nextSet.push(0)
         end
+      end
+      dataSets.push(nextSet)
     end
+
+    profit = 0
+      for i in 1..orderedGroups.count - 2
+        deltaFirst = dataSets[0][i-1] - dataSets[0][i]
+        deltaSecond = dataSets[1][i] - dataSets[1][i+1]
+        if delta > 0
+          profit += deltaFirst
+        else
+          profit -= dataSets[0][i]
+        end
+      end
+    it = 0
   end
+
 
   # GET /bet_anals/1
   # GET /bet_anals/1.json

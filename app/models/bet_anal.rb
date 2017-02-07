@@ -4,6 +4,6 @@ class BetAnal < ApplicationRecord
     return self[:measuredTime].strftime('%H')
   end
   def getDateAndHour
-    return self[:measuredTime].strftime('%H %d %m %y')
+    return self[:measuredTime].strftime('%H %M %d')
   end
 end

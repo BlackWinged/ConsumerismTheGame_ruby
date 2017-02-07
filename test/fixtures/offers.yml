@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  source: 
+  target: 
+  message: MyString
+  money: 9.99
+  items: 
+
+two:
+  source: 
+  target: 
+  message: MyString
+  money: 9.99
+  items: 

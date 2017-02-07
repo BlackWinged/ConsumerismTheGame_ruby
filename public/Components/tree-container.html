@@ -1,0 +1,34 @@
+﻿<link rel="import" href="/admin/wwwroot/lib/polymer/polymer.html">
+<link rel="import" href="/admin/wwwroot/lib/paper-button/paper-button.html">
+<link rel="import" href="/admin/Components/product-group.html">
+
+<dom-module id="tree-container" >
+    <template>
+        <content></content>
+    </template>
+<script>
+  Polymer({
+      is: 'tree-container',
+      ready: function () {
+          var elems = Polymer.dom(this);
+          var test = 1;
+      },
+      listeners: {
+          'tap': 'toggle'
+      },
+      toggle: function (e) {
+          var clickedMenuItem = Polymer.dom(e).localTarget
+          clickedMenuItem.activateSelection = true;
+          var items = Polymer.dom(this).querySelectorAll("menu-item");
+
+          [].forEach.call(items, function (item) {
+              // do whatever
+              if (clickedMenuItem !== item) {
+                  item.activateSelection = false
+              }
+          });
+          //alert(clickedMenuItem.menuItemName);
+      }
+  });
+</script>
+</dom-module>

@@ -1,0 +1,2 @@
+module BetAnalsHelper
+end

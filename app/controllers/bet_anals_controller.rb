@@ -64,20 +64,21 @@ class BetAnalsController < ApplicationController
   # end
   
   def index
-    if !params[:nameOfLoto].empty?
-      fromDate = Time.now
-      uptoDate = Time.now
-      if !params[:from_date].empty?
-        fromDate = params[:from_date]
-      end
-      if !params[:to_date].empty?
-        uptoDate = params[:to_date]
+      if params[:nameOfLoto] != nil and !params[:nameOfLoto].empty?
+        fromDate = Time.now
+        uptoDate = Time.now
+        if !params[:from_date].empty?
+          fromDate = params[:from_date]
+        end
+        if !params[:to_date].empty?
+          uptoDate = params[:to_date]
+        end
+
+        @bet_anals = BetAnal.where(nameOfLoto: params[:nameOfLoto]).where('bet_anals."measuredTime" >= ? and bet_anals."measuredTime" <= ?', fromDate, uptoDate)
+      else
+        @bet_anals = BetAnal.all
       end
 
-      @bet_anals = BetAnal.where(nameOfLoto: params[:nameOfLoto]).where('bet_anals."measuredTime" >= ? and bet_anals."measuredTime" <= ?', fromDate, uptoDate)
-    else
-      @bet_anals = BetAnal.all
-    end
 
     @parsed_anals = {}
     @siteNames = []
@@ -102,7 +103,7 @@ class BetAnalsController < ApplicationController
     @orderedGroups.uniq!
     @orderedGroups.sort!
     @maxRecords = max
-      if !params[:bet_on_number].empty?
+      if params[:bet_on_number] != nil and !params[:bet_on_number].empty?
        # processProfits(@parsed_anals, params[:bet_on_number].to_i, @maxCycles, @orderedGroups)
       end
     end

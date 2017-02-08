@@ -104,10 +104,9 @@ class BetAnalsController < ApplicationController
     @orderedGroups.sort!
     @maxRecords = max
       @victoryHash = {}
-      #if params[:bet_on_number] != nil and !params[:bet_on_number].empty?
-        @victoryHash  = processProfits(@parsed_anals, 13 , @maxCycles, @orderedGroups)
-    #params[:bet_on_number].to_i
-      #end
+      if params[:bet_on_number] != nil and !params[:bet_on_number].empty?
+        @victoryHash  = processProfits(@parsed_anals, params[:bet_on_number].to_i , @maxCycles, @orderedGroups)
+      end
     end
 
   def processProfits(parsed_anals, numberToCheck, maxCycles, orderedGroups)

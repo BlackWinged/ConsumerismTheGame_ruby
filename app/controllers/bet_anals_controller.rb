@@ -68,10 +68,10 @@ class BetAnalsController < ApplicationController
         fromDate = Time.now - 1.days
         uptoDate = Time.now + 1.days
         if !params[:from_date].empty?
-          fromDate = DateTime.strptime( params[:from_date]) - 1.days
+          fromDate = DateTime.strptime( params[:from_date], '%Y-%m-%d') - 1.days
         end
         if !params[:to_date].empty?
-          uptoDate = DateTime.strptime( params[:to_date]) + 1.days
+          uptoDate = DateTime.strptime( params[:to_date], '%Y-%m-%d') + 1.days
         end
 
         @bet_anals = BetAnal.where(nameOfLoto: params[:nameOfLoto]).where('bet_anals."measuredTime" >= ? and bet_anals."measuredTime" <= ?', fromDate, uptoDate)

@@ -114,9 +114,9 @@ class BetAnalsController < ApplicationController
 
     for numCheck in numberToCheck..maxCycles
       nextSet = []
-      for j in 1..orderedGroups.count
-        if parsed_anals[j].key?(numCheck)
-          nextSet.push(parsed_anals[j][numCheck].undrawnBallCount)
+      orderedGroups.each do |key|
+        if parsed_anals[key].key?(numCheck)
+          nextSet.push(parsed_anals[key][numCheck].undrawnBallCount)
         else
           nextSet.push(0)
         end

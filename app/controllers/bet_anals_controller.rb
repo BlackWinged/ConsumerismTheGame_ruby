@@ -65,13 +65,13 @@ class BetAnalsController < ApplicationController
   
   def index
       if params[:nameOfLoto] != nil and !params[:nameOfLoto].empty?
-        fromDate = Time.now
-        uptoDate = Time.now
+        fromDate = Time.now - 1.days
+        uptoDate = Time.now + 1.days
         if !params[:from_date].empty?
-          fromDate = params[:from_date]
+          fromDate = DateTime.strptime( params[:from_date]) - 1.days
         end
         if !params[:to_date].empty?
-          uptoDate = params[:to_date]
+          uptoDate = DateTime.strptime( params[:to_date]) + 1.days
         end
 
         @bet_anals = BetAnal.where(nameOfLoto: params[:nameOfLoto]).where('bet_anals."measuredTime" >= ? and bet_anals."measuredTime" <= ?', fromDate, uptoDate)
@@ -103,9 +103,11 @@ class BetAnalsController < ApplicationController
     @orderedGroups.uniq!
     @orderedGroups.sort!
     @maxRecords = max
-      if params[:bet_on_number] != nil and !params[:bet_on_number].empty?
-       # processProfits(@parsed_anals, params[:bet_on_number].to_i, @maxCycles, @orderedGroups)
-      end
+      @victoryHash = {}
+      #if params[:bet_on_number] != nil and !params[:bet_on_number].empty?
+        @victoryHash  = processProfits(@parsed_anals, 13 , @maxCycles, @orderedGroups)
+    #params[:bet_on_number].to_i
+      #end
     end
 
   def processProfits(parsed_anals, numberToCheck, maxCycles, orderedGroups)
@@ -123,17 +125,14 @@ class BetAnalsController < ApplicationController
       dataSets.push(nextSet)
     end
 
-    profit = 0
-      for i in 1..orderedGroups.count - 2
-        deltaFirst = dataSets[0][i-1] - dataSets[0][i]
-        deltaSecond = dataSets[1][i] - dataSets[1][i+1]
-        if delta > 0
-          profit += deltaFirst
-        else
-          profit -= dataSets[0][i]
-        end
+    wins = 0
+    loses = 0
+      for i in 1..orderedGroups.count - 1
+        deltaFirst = dataSets[0][i-1] - dataSets[1][i]
+        wins += deltaFirst
+        loses += dataSets[1][i]
       end
-    it = 0
+    return victoryHash = {:wins => wins, :loses => loses}
   end
 
 

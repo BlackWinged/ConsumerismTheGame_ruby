@@ -1,1 +1,0 @@
-json.array! @economic_objects, partial: 'economic_objects/economic_object', as: :economic_object

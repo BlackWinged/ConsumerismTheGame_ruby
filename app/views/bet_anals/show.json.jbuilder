@@ -1,1 +1,0 @@
-json.partial! "bet_anals/bet_anal", bet_anal: @bet_anal

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'users/test'
   resources :users
   get 'public/index'
+  post 'public/contact'
 
 
   get 'splash/index'
